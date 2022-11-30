@@ -1,7 +1,6 @@
 //mengimport function dari file function.js
 const func = require("./function1.js");
 const yargs = require("yargs");
-const { describe } = require("yargs");
 
 //add
 yargs.command({
@@ -38,13 +37,38 @@ yargs.command({
     func.saveContact(argv.name, argv.email, argv.mobile);
   },
 });
-
+// command tampil list
 yargs.command({
   command: "tampil",
   describe: "Contact List",
-  handler() {
-    func.tampil();
+
+  builder: {
+    name: {
+      describe: "Contact Name",
+      demandOption: true,
+      type: "string",
+    },
+  },
+
+  handler(argv) {
+    func.tampil(argv.name);
   },
 });
 
+yargs.command({
+  command: "delete",
+  describe: "Contact List",
+
+  builder: {
+    name: {
+      describe: "Contact Name",
+      demandOption: true,
+      type: "string",
+    },
+  },
+
+  handler(argv) {
+    func.del(argv.name);
+  },
+});
 yargs.parse();
